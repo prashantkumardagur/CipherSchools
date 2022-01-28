@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+
+    <style>
+        body{font-family: sans-serif; display: flex; height: 100vh; place-items: center; background-color: #f6f6f6;}
+        .container{margin: auto; width: 360px; background-color: #fff; padding: 30px 50px 50px; border-radius: 20px; 
+            box-shadow: 0 5px 20px #ddd; }
+        .timer{font-size: 80px; font-weight: bold; margin: 20px 0 30px;}
+        h1{font-size: 20px; letter-spacing: 2px; color: #555;}
+        #ms{font-size: 40px;}
+        button{display: inline-block; padding: 20px 30px; background-color: #c4e4ff; border: none; border-radius: 50px;
+            font-size: 26px; color: #000; font-weight: bold; margin-right: 30px;}
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>STOPWATCH</h1>
+        <div class="timer"><span id="min">00</span> : <span id="sec">00</span> <span id="ms">00</span></div>
+        <div class="btns">
+            <button id="action" onclick="watchAction()">Start</button>
+            <button id="reset" onclick="watchReset()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        var counter=0, mcount=0, scount=0, watchPlay=false;
+        var ms = document.getElementById('ms');
+        var sec = document.getElementById('sec');
+        var min = document.getElementById('min');
+        var actionBtn = document.getElementById('action');
+        var resetBtn = document.getElementById('reset');
+
+        function stopwatch(){
+            if(watchPlay){
+                ++counter;
+                scount=Math.floor(counter/100)%60;
+                mcount=Math.floor(counter/6000);
+                ms.innerHTML = counter % 100;
+
+                if(scount<10) sec.innerHTML = `0${scount}`;
+                else sec.innerHTML = scount;
+
+                if(mcount<10) min.innerHTML = `0${mcount}`;
+                else min.innerHTML = mcount;
+            }
+        }
+
+        function watchAction(){ 
+            watchPlay = !watchPlay;
+            if(watchPlay) actionBtn.innerHTML = 'Pause';
+            else actionBtn.innerHTML = 'Start';
+        }
+
+        function watchReset(){ 
+            watchPlay=false; counter=0;
+            sec.innerHTML = min.innerHTML= ms.innerHTML='00';
+            actionBtn.innerHTML = 'Start';
+        }
+
+        window.setInterval(stopwatch , 10);
+    </script>
+
+</body>
+</html>
